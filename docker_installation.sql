@@ -262,5 +262,98 @@ CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT   
 9bbc959f3888        oracle23c           3.17%               555.4MiB / 3.556GiB   15.25%              127kB / 82.5kB      13.1GB / 6.31GB     87
 
 */
+[mydocker@myserver ~]$ docker exec -it 9bbc959f3888 /bin/sh
+sh-4.4$ sqlplus / as sysdba
+
+/*
+SQL*Plus: Release 23.0.0.0.0 - Developer-Release on Mon Jun 5 09:05:08 2023
+Version 23.2.0.0.0
+
+Copyright (c) 1982, 2023, Oracle.  All rights reserved.
 
 
+Connected to:
+Oracle Database 23c Free, Release 23.0.0.0.0 - Developer-Release
+Version 23.2.0.0.0
+
+SQL> show pdbs;
+
+    CON_ID CON_NAME                       OPEN MODE  RESTRICTED
+---------- ------------------------------ ---------- ----------
+         2 PDB$SEED                       READ ONLY  NO
+         3 FREEPDB1                       READ WRITE NO
+
+*/
+--to view the docker log
+[mydocker@myserver ~]$ docker logs 9bbc
+/*
+Starting Oracle Net Listener.
+Oracle Net Listener started.
+Starting Oracle Database instance FREE.
+Oracle Database instance FREE started.
+
+The Oracle base remains unchanged with value /opt/oracle
+
+SQL*Plus: Release 23.0.0.0.0 - Developer-Release on Mon Jun 5 06:47:57 2023
+Version 23.2.0.0.0
+
+Copyright (c) 1982, 2023, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 23c Free, Release 23.0.0.0.0 - Developer-Release
+Version 23.2.0.0.0
+
+SQL>
+User altered.
+
+SQL>
+User altered.
+
+SQL>
+Session altered.
+
+SQL>
+User altered.
+
+SQL> Disconnected from Oracle Database 23c Free, Release 23.0.0.0.0 - Developer-Release
+Version 23.2.0.0.0
+The Oracle base remains unchanged with value /opt/oracle
+#########################
+DATABASE IS READY TO USE!
+#########################
+The following output is now a tail of the alert.log:
+Completed: Pluggable database FREEPDB1 opened read write
+Completed: ALTER DATABASE OPEN
+2023-06-05T06:47:56.990621+00:00
+===========================================================
+Dumping current patch information
+===========================================================
+No patches have been applied
+===========================================================
+2023-06-05T06:47:59.829441+00:00
+FREEPDB1(3):TABLE AUDSYS.AUD$UNIFIED: ADDED INTERVAL PARTITION SYS_P411 (3262) VALUES LESS THAN (TIMESTAMP' 2023-06-06 00:00:00')
+2023-06-05T06:53:53.334093+00:00
+Resize operation completed for file# 201, fname /opt/oracle/oradata/FREE/temp01.dbf, old size 20480K, new size 86016K
+2023-06-05T06:53:54.938050+00:00
+Resize operation completed for file# 201, fname /opt/oracle/oradata/FREE/temp01.dbf, old size 86016K, new size 151552K
+2023-06-05T06:53:56.806248+00:00
+Resize operation completed for file# 201, fname /opt/oracle/oradata/FREE/temp01.dbf, old size 151552K, new size 217088K
+2023-06-05T06:53:58.241391+00:00
+Resize operation completed for file# 201, fname /opt/oracle/oradata/FREE/temp01.dbf, old size 217088K, new size 282624K
+2023-06-05T06:53:59.811410+00:00
+Resize operation completed for file# 201, fname /opt/oracle/oradata/FREE/temp01.dbf, old size 282624K, new size 348160K
+2023-06-05T06:57:47.281660+00:00
+--ATTENTION--
+Heavy swapping observed on system
+WARNING: Heavy swapping observed on system in last 5 mins.
+Heavy swapping can lead to timeouts, poor performance, and instance eviction.
+2023-06-05T06:57:49.338946+00:00
+Resize operation completed for file# 3, fname /opt/oracle/oradata/FREE/sysaux01.dbf, old size 563200K, new size 573440K
+2023-06-05T06:57:49.341101+00:00
+FREEPDB1(3):Resize operation completed for file# 13, fname /opt/oracle/oradata/FREE/FREEPDB1/sysaux01.dbf, old size 317440K, new size 337920K
+2023-06-05T07:34:52.615367+00:00
+Warning: VKTM detected a forward time drift.
+Please see the VKTM trace file for more details:
+/opt/oracle/diag/rdbms/free/FREE/trace/FREE_vktm_43.trc
+*/
